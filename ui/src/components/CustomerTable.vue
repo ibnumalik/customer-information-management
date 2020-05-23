@@ -20,6 +20,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { SETTINGS } from '../settings';
+
 export default {
   props: {
     customers: Array,
@@ -50,10 +53,25 @@ export default {
       console.log(this.customers);
     },
 
+    editItem(item) {
+      this.editedIndex = this.customers.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+
     deleteItem(item) {
-      const index = this.desserts.indexOf(item);
+      const index = this.customers.indexOf(item);
+      /* Optimistic delete. */
       confirm('Are you sure you want to delete this item?') &&
-        this.desserts.splice(index, 1);
+        this.customers.splice(index, 1);
+
+      const url = `${SETTINGS.CUSTOMER_API}/${item.id}/delete`;
+      axios.delete(url).then((res) => {
+        /* Undo optimistic delete if something goes wrong. */
+        if (res.status !== 200) {
+          this.customers.splice(index, 0, item);
+        }
+      });
     },
 
     save() {
