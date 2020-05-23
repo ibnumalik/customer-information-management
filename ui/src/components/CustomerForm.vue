@@ -6,7 +6,7 @@
           <span class="headline">New Customer</span>
         </v-card-title>
         <v-card-text>
-          <v-form @submit.prevent="create">
+          <v-form @submit.prevent="create" v-model="valid" ref="form">
             <v-container>
               <v-row>
                 <!-- Name -->
@@ -16,6 +16,7 @@
                     required
                     outlined
                     v-model="name"
+                    :rules="nameRules"
                   ></v-text-field>
                 </v-col>
 
@@ -26,6 +27,7 @@
                     required
                     outlined
                     v-model="email"
+                    :rules="emailRules"
                   ></v-text-field>
                 </v-col>
 
@@ -36,6 +38,7 @@
                     required
                     outlined
                     v-model="phone"
+                    :rules="phoneRules"
                   ></v-text-field>
                 </v-col>
 
@@ -46,6 +49,7 @@
                     required
                     outlined
                     v-model="address"
+                    :rules="addressRules"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -77,10 +81,15 @@ export default {
     },
   },
   data: () => ({
+    valid: false,
     name: '',
+    nameRules: [(v) => !!v || 'Name is required'],
     email: '',
+    emailRules: [(v) => !!v || 'Email is required'],
     phone: '',
+    phoneRules: [(v) => !!v || 'Phone number is required'],
     address: '',
+    addressRules: [(v) => !!v || 'Address is required'],
   }),
 
   methods: {
@@ -91,6 +100,10 @@ export default {
         phone: this.phone,
         address: this.address,
       };
+
+      if (!this.valid) {
+          return this.$refs.form.validate();
+      }
 
       Axios.post(SETTINGS.CUSTOMER_API + '/create', customer).then((res) => {
         if (res.status === 201) {
