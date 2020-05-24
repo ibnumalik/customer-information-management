@@ -125,6 +125,7 @@ export default {
       Axios.post(SETTINGS.CUSTOMER_API + '/create', this.item).then((res) => {
         if (res.status === 201) {
           this.$emit('close');
+          this.$store.commit('updateCustomer', [res.data]);
         }
       });
     },

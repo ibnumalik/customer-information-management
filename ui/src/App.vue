@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="blue-grey lighten-1" dark flat>
+    <v-app-bar app color="blue-grey darken-1" dark flat>
       <div class="d-flex align-center">
         <router-link to="/" class="brand-link">
           <h1 class="brand">Customer Information Management</h1>

@@ -40,7 +40,6 @@ import CustomerDetail from '../components/CustomerDetail.vue';
 
 export default {
   data: () => ({
-    customers: [],
     formDialog: false,
     showDialog: false,
     customer: null,
@@ -50,6 +49,12 @@ export default {
     CustomerTable,
     CustomerForm,
     CustomerDetail,
+  },
+
+  computed: {
+    customers() {
+      return this.$store.state.customers;
+    },
   },
 
   methods: {
@@ -71,9 +76,9 @@ export default {
   },
 
   mounted() {
-    axios
-      .get('http://localhost:3003/customer')
-      .then((res) => (this.customers = res.data));
+    axios.get('http://localhost:3003/customer').then((res) => {
+      this.$store.commit('updateCustomer', res.data);
+    });
   },
 };
 </script>
