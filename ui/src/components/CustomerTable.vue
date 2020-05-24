@@ -4,17 +4,23 @@
     :items="customers"
     sort-by="calories"
     class="elevation-1"
+    @click:row="show"
   >
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)" title="Edit customer">
+      <v-icon
+        small
+        class="mr-2"
+        @click.stop="editItem(item)"
+        title="Edit customer"
+      >
         mdi-pencil
       </v-icon>
-      <v-icon small @click="deleteItem(item)" title="Delete customer">
+      <v-icon small @click.stop="deleteItem(item)" title="Delete customer">
         mdi-delete
       </v-icon>
     </template>
     <template v-slot:no-data>
-      <p>There is no customer.</p>
+      <p class="my-6">There is no customer.</p>
     </template>
   </v-data-table>
 </template>
@@ -49,16 +55,25 @@ export default {
     deleteItem(item) {
       const index = this.customers.indexOf(item);
       /* Optimistic delete. */
-      confirm('Are you sure you want to delete this item?') &&
+      const confirmDelete = confirm(
+        'Are you sure you want to delete this item?'
+      );
+
+      if (confirmDelete) {
         this.customers.splice(index, 1);
 
-      const url = `${SETTINGS.CUSTOMER_API}/${item.id}/delete`;
-      axios.delete(url).then((res) => {
-        /* Undo optimistic delete if something goes wrong. */
-        if (res.status !== 200) {
-          this.customers.splice(index, 0, item);
-        }
-      });
+        const url = `${SETTINGS.CUSTOMER_API}/${item.id}/delete`;
+        axios.delete(url).then((res) => {
+          /* Undo optimistic delete if something goes wrong. */
+          if (res.status !== 200) {
+            this.customers.splice(index, 0, item);
+          }
+        });
+      }
+    },
+
+    show(item) {
+      this.$emit('show-customer', item);
     },
 
     save() {

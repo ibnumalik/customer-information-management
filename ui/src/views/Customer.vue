@@ -3,7 +3,7 @@
     <div class="align-center d-flex header justify-space-between my-8">
       <h1 class="display-2">Customers</h1>
 
-      <v-btn color="primary" @click="dialog = !dialog">
+      <v-btn color="primary" @click="formDialog = !formDialog">
         Register New Customer
       </v-btn>
     </div>
@@ -12,14 +12,22 @@
       <CustomerTable
         :customers="customers"
         @open-customer-form="openCustomerForm"
+        @show-customer="show"
       />
     </div>
 
     <CustomerForm
-      v-if="dialog"
-      :dialog="dialog"
+      v-if="formDialog"
+      :dialog="formDialog"
       :customer="customer"
-      @close="closeForm()"
+      @close="close()"
+    />
+
+    <CustomerDetail
+      v-if="showDialog"
+      :sdialog="showDialog"
+      :customer="customer"
+      @close="close()"
     />
   </div>
 </template>
@@ -28,28 +36,37 @@
 import axios from 'axios';
 import CustomerTable from '../components/CustomerTable.vue';
 import CustomerForm from '../components/CustomerForm.vue';
+import CustomerDetail from '../components/CustomerDetail.vue';
 
 export default {
   data: () => ({
     customers: [],
-    dialog: false,
+    formDialog: false,
+    showDialog: false,
     customer: null,
   }),
 
   components: {
     CustomerTable,
     CustomerForm,
+    CustomerDetail,
   },
 
   methods: {
     openCustomerForm(item) {
       this.customer = item.customer;
-      this.dialog = true;
+      this.formDialog = true;
     },
 
-    closeForm() {
-      this.dialog = false;
+    close() {
+      this.formDialog = false;
+      this.showDialog = false;
       this.customer = null;
+    },
+
+    show(customer) {
+      this.customer = customer;
+      this.showDialog = true;
     },
   },
 
