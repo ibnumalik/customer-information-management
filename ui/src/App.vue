@@ -2,7 +2,9 @@
   <v-app>
     <v-app-bar app color="blue-grey lighten-1" dark flat>
       <div class="d-flex align-center">
-        <h1 class="brand">Customer Information Management</h1>
+        <router-link to="/" class="brand-link">
+          <h1 class="brand">Customer Information Management</h1>
+        </router-link>
       </div>
 
       <v-spacer></v-spacer>
@@ -31,6 +33,11 @@ export default {
 .brand {
   font-size: 16px;
   font-weight: 400;
+}
+
+.brand-link {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .bg-light-grey {
