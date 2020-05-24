@@ -80,15 +80,6 @@ export default {
     show(item) {
       this.$emit('show-customer', item);
     },
-
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
-      this.close();
-    },
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <div class="align-center d-flex header justify-space-between my-8">
       <h1 class="display-2">Customers</h1>
 
-      <v-btn color="primary" @click="formDialog = !formDialog">
+      <v-btn color="primary" @click="createNewCustomer()">
         Register New Customer
       </v-btn>
     </div>
@@ -45,6 +45,7 @@ export default {
     showDialog: false,
     customer: null,
     customers: [],
+    editedIndex: -1,
   }),
 
   components: {
@@ -56,7 +57,13 @@ export default {
   methods: {
     openCustomerForm(item) {
       this.customer = item.customer;
+      this.editedIndex = item.index;
       this.formDialog = true;
+    },
+
+    createNewCustomer() {
+      this.formDialog = true;
+      this.editedIndex = -1;
     },
 
     close() {
@@ -71,6 +78,10 @@ export default {
     },
 
     updateCustomers(item) {
+      if (this.editedIndex > -1) {
+        return Object.assign(this.customers[this.editedIndex], item);
+      }
+
       this.customers = [...this.customers, item];
     },
   },
