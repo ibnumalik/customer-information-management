@@ -21,6 +21,7 @@
       :dialog="formDialog"
       :customer="customer"
       @close="close()"
+      @update-customers="updateCustomers"
     />
 
     <CustomerDetail
@@ -43,18 +44,13 @@ export default {
     formDialog: false,
     showDialog: false,
     customer: null,
+    customers: [],
   }),
 
   components: {
     CustomerTable,
     CustomerForm,
     CustomerDetail,
-  },
-
-  computed: {
-    customers() {
-      return this.$store.state.customers;
-    },
   },
 
   methods: {
@@ -73,11 +69,15 @@ export default {
       this.customer = customer;
       this.showDialog = true;
     },
+
+    updateCustomers(item) {
+      this.customers = [...this.customers, item];
+    },
   },
 
   mounted() {
     axios.get('http://localhost:3003/customer').then((res) => {
-      this.$store.commit('updateCustomer', res.data);
+      this.customers = res.data;
     });
   },
 };
