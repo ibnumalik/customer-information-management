@@ -9,13 +9,18 @@
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
-        class="mr-2"
+        class="mr-2 hover-scale-up hover-blue-icon"
         @click.stop="editItem(item)"
         title="Edit customer"
       >
         mdi-pencil
       </v-icon>
-      <v-icon small @click.stop="deleteItem(item)" title="Delete customer">
+      <v-icon
+        small
+        @click.stop="deleteItem(item)"
+        title="Delete customer"
+        class="hover-scale-up hover-red-icon"
+      >
         mdi-delete
       </v-icon>
     </template>
@@ -87,3 +92,19 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.hover-scale-up {
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.hover-blue-icon:hover {
+  color: #2196f3;
+}
+
+.hover-red-icon:hover {
+  color: #f44336;
+}
+</style>
