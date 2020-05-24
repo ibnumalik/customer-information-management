@@ -6,15 +6,15 @@
     class="elevation-1"
   >
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">
+      <v-icon small class="mr-2" @click="editItem(item)" title="Edit customer">
         mdi-pencil
       </v-icon>
-      <v-icon small @click="deleteItem(item)">
+      <v-icon small @click="deleteItem(item)" title="Delete customer">
         mdi-delete
       </v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Reset</v-btn>
+      <p>There is no customer.</p>
     </template>
   </v-data-table>
 </template>
@@ -30,12 +30,7 @@ export default {
 
   data: () => ({
     headers: [
-      {
-        text: 'Name',
-        align: 'start',
-        sortable: false,
-        value: 'name',
-      },
+      { text: 'Name', align: 'start', value: 'name' },
       { text: 'Email', value: 'email' },
       { text: 'Phone Number', value: 'phone' },
       { text: 'Address', value: 'address' },
@@ -44,19 +39,11 @@ export default {
     editedIndex: -1,
   }),
 
-  created() {
-    this.initialize();
-  },
-
   methods: {
-    initialize() {
-      console.log(this.customers);
-    },
-
     editItem(item) {
-      this.editedIndex = this.customers.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+      const index = this.customers.indexOf(item);
+
+      this.$emit('open-customer-form', { index, customer: item });
     },
 
     deleteItem(item) {

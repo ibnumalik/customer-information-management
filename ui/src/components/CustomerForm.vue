@@ -3,10 +3,10 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">New Customer</span>
+          <span class="headline">{{ formAction }} Customer</span>
         </v-card-title>
         <v-card-text>
-          <v-form @submit.prevent="create" v-model="valid" ref="form">
+          <v-form @submit.prevent="createOrEdit" v-model="valid" ref="form">
             <v-container>
               <v-row>
                 <!-- Name -->
@@ -15,7 +15,7 @@
                     label="Name"
                     required
                     outlined
-                    v-model="name"
+                    v-model="item.name"
                     :rules="nameRules"
                   ></v-text-field>
                 </v-col>
@@ -26,7 +26,7 @@
                     label="Email"
                     required
                     outlined
-                    v-model="email"
+                    v-model="item.email"
                     :rules="emailRules"
                   ></v-text-field>
                 </v-col>
@@ -37,7 +37,7 @@
                     label="Phone Number"
                     required
                     outlined
-                    v-model="phone"
+                    v-model="item.phone"
                     :rules="phoneRules"
                   ></v-text-field>
                 </v-col>
@@ -48,7 +48,7 @@
                     label="Address"
                     required
                     outlined
-                    v-model="address"
+                    v-model="item.address"
                     :rules="addressRules"
                   ></v-text-field>
                 </v-col>
@@ -61,8 +61,13 @@
           <v-btn color="blue darken-1" text @click="$emit('close')">
             Cancel
           </v-btn>
-          <v-btn color="blue darken-1" text @click="create()" type="submit">
-            Create
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="createOrEdit()"
+            type="submit"
+          >
+            {{ actionTitle }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -79,37 +84,53 @@ export default {
       type: Boolean,
       default: false,
     },
+    customer: {
+      type: Object,
+    },
   },
+
   data: () => ({
     valid: false,
-    name: '',
     nameRules: [(v) => !!v || 'Name is required'],
-    email: '',
     emailRules: [(v) => !!v || 'Email is required'],
-    phone: '',
     phoneRules: [(v) => !!v || 'Phone number is required'],
-    address: '',
     addressRules: [(v) => !!v || 'Address is required'],
   }),
 
-  methods: {
-    create() {
-      const customer = {
-        name: this.name,
-        email: this.email,
-        phone: this.phone,
-        address: this.address,
-      };
+  computed: {
+    item: {
+      get() {
+        return Object.assign({}, this.customer) || {};
+      },
+      set(nv) {
+        return nv;
+      },
+    },
 
+    formAction() {
+      return this.customer ? 'Edit' : 'New';
+    },
+
+    actionTitle() {
+      return this.customer ? 'Update' : 'Create';
+    },
+  },
+
+  methods: {
+    createOrEdit() {
       if (!this.valid) {
-          return this.$refs.form.validate();
+        return this.$refs.form.validate();
       }
 
-      Axios.post(SETTINGS.CUSTOMER_API + '/create', customer).then((res) => {
+      Axios.post(SETTINGS.CUSTOMER_API + '/create', this.item).then((res) => {
         if (res.status === 201) {
           this.$emit('close');
         }
       });
+    },
+
+    reset() {
+      this.$refs.form.resetValidation();
     },
   },
 };
