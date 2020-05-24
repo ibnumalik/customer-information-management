@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  ui:
+    build:
+      context: ./ui
+
+  api:
+    build:
+      context: ./api
