@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3003';
+const API_BASE_URL = process.env.VUE_APP_API_URL;
 
 export const SETTINGS = {
   API_BASE_URL,
