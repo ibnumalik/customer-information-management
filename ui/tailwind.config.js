@@ -1,6 +1,6 @@
 module.exports = {
   prefix: 'tw-',
-  purge: ['./src/**.*.vue'],
+  purge: ['./src/**/*.vue'],
   theme: {
     extend: {
       fontSize: {
