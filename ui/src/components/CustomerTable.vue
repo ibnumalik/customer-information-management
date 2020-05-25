@@ -13,7 +13,7 @@
         @click.stop="editItem(item)"
         title="Edit customer"
       >
-        mdi-pencil
+        {{ mdiPencil }}
       </v-icon>
       <v-icon
         small
@@ -21,7 +21,7 @@
         title="Delete customer"
         class="hover-scale-up hover-red-icon"
       >
-        mdi-delete
+        {{ mdiDelete }}
       </v-icon>
     </template>
     <template v-slot:no-data>
@@ -33,6 +33,7 @@
 <script>
 import axios from 'axios';
 import { SETTINGS } from '../settings';
+import { mdiDelete, mdiPencil } from '@mdi/js';
 
 export default {
   props: {
@@ -48,6 +49,8 @@ export default {
       { text: 'Actions', value: 'actions', sortable: false },
     ],
     editedIndex: -1,
+    mdiDelete,
+    mdiPencil,
   }),
 
   methods: {
