@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <div class="align-center d-flex header justify-space-between my-8">
-      <h1 class="display-2">Customers</h1>
+    <div class="lg:tw-flex tw-justify-between tw-mb-8 tw-mt-4">
+      <h1 class="tw-text-3xl tw-mb-2">Customers</h1>
 
-      <v-btn color="primary" @click="createNewCustomer()">
+      <v-btn color="primary" @click="createNewCustomer()" :small="$vuetify.breakpoint.xs">
         Register New Customer
       </v-btn>
     </div>
 
-    <div class="content">
+    <div class="content tw-mb-8">
       <CustomerTable
         :customers="customers"
         @open-customer-form="openCustomerForm"

@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="dialog" persistent max-width="600px" :fullscreen="$vuetify.breakpoint.smAndDown">
       <v-card>
         <v-card-title>
           <span class="headline">{{ formAction }} Customer</span>

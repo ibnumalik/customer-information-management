@@ -1,10 +1,13 @@
 <template>
   <v-app>
     <v-app-bar app color="blue-grey darken-1" dark flat>
+      <v-app-bar-nav-icon
+        class="tw-hidden"
+        :hidden="$vuetify.breakpoint.lgAndUp"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+
       <div class="tw-flex tw-items-center">
-        <div class="lg:tw-hidden">
-          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        </div>
         <router-link to="/" class="brand-link">
           <h1 class="brand">Customer Information Management</h1>
         </router-link>
