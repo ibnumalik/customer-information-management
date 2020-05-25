@@ -38,6 +38,7 @@ import axios from 'axios';
 import CustomerTable from '../components/CustomerTable.vue';
 import CustomerForm from '../components/CustomerForm.vue';
 import CustomerDetail from '../components/CustomerDetail.vue';
+import { SETTINGS } from '../settings';
 
 export default {
   data: () => ({
@@ -87,9 +88,7 @@ export default {
   },
 
   mounted() {
-    axios.get('http://localhost:3003/customer').then((res) => {
-      this.customers = res.data;
-    });
+    axios.get(SETTINGS.CUSTOMER_API).then((res) => (this.customers = res.data));
   },
 };
 </script>
