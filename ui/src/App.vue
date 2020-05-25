@@ -9,8 +9,10 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text to="/"> <span class="mr-2">Home</span> </v-btn>
-      <v-btn text to="customer"> <span class="mr-2">Customer</span> </v-btn>
+      <div class="tw-hidden lg:tw-block">
+        <v-btn text to="/"> <span class="mr-2">Home</span> </v-btn>
+        <v-btn text to="customer"> <span class="mr-2">Customer</span> </v-btn>
+      </div>
     </v-app-bar>
 
     <v-content class="bg-light-grey">
@@ -44,3 +46,5 @@ export default {
   background: #f9f9f9;
 }
 </style>
+
+<style src="./assets/tailwind.css">
