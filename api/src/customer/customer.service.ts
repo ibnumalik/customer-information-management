@@ -14,6 +14,10 @@ export class CustomerService {
     return await this.customerRepository.find();
   }
 
+  async find(id: number): Promise<Customer> {
+    return await this.customerRepository.findOneOrFail(id);
+  }
+
   async create(customer: Customer): Promise<Customer> {
     return await this.customerRepository.save(customer);
   }

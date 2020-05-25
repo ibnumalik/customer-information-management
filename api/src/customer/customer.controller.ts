@@ -19,6 +19,11 @@ export class CustomerController {
     return this.customerService.findAll();
   }
 
+  @Get(':id')
+  get(@Param('id') id): Promise<Customer> {
+    return this.customerService.find(id);
+  }
+
   @Post('create')
   async create(@Body() customerData: Customer): Promise<any> {
     return this.customerService.create(customerData);
