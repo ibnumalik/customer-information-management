@@ -1,5 +1,7 @@
 # Customer Information Management
 
+**Demo** at https://cim.shaiful.my
+
 Web application built using NestJS and VueJS.
 
 Build a rest API endpoints using nodejs/python or any preferred language to perform
